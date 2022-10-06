@@ -63,7 +63,7 @@ func Add_seat(c *gin.Context) {
 
 }
 func Update_Bus(c *gin.Context) {
-	id := c.Param("id")
+	Bus_Number := c.Param("id")
 	var body struct {
 		Bus_Name    string
 		Bus_Number  string
@@ -71,7 +71,7 @@ func Update_Bus(c *gin.Context) {
 	}
 	c.Bind(&body)
 	var bus models.Buses
-	initializers.DB.First(&bus, id)
+	initializers.DB.First(&bus, Bus_Number)
 	initializers.DB.Model(&bus).Updates(models.Buses{
 		Bus_Name:    body.Bus_Name,
 		Bus_Number:  body.Bus_Number,
@@ -79,6 +79,16 @@ func Update_Bus(c *gin.Context) {
 	})
 	c.JSON(200, gin.H{
 		"message": bus,
+	})
+
+}
+func AllBus(c *gin.Context) {
+	// Get the User
+	var buses []models.Buses
+	initializers.DB.Find(&buses)
+	//Response
+	c.JSON(200, gin.H{
+		"message": buses,
 	})
 
 }

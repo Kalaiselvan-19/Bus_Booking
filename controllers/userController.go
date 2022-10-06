@@ -68,7 +68,7 @@ func Update_user(c *gin.Context) {
 		})
 		return
 	}
-	id := c.Param("id")
+	email := c.Param("email")
 	var body struct {
 		Name         string
 		Email        string
@@ -77,7 +77,7 @@ func Update_user(c *gin.Context) {
 	}
 	c.Bind(&body)
 	var user models.User
-	initializers.DB.First(&user, id)
+	initializers.DB.First(&user, email)
 	initializers.DB.Model(&user).Updates(models.User{
 		Name:         body.Name,
 		Email:        body.Email,
