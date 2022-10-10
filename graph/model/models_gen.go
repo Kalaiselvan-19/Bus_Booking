@@ -2,6 +2,11 @@
 
 package model
 
+type Auth struct {
+	Login    interface{} `json:"login"`
+	Register interface{} `json:"register"`
+}
+
 type NewUser struct {
 	Name        string `json:"Name"`
 	Email       string `json:"Email"`

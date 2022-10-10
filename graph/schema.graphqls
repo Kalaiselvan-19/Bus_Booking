@@ -2,7 +2,9 @@
 #
 # https://gqlgen.com/getting-started/
 
-
+directive @goField(forceResolver: Boolean, name: String) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION
+directive @auth on FIELD_DEFINITION
+scalar Any
 type User {
   Name:  String!
 	Email: String!
@@ -17,13 +19,19 @@ input NewUser {
 	Phone_Number: Int !
 
 }
+
 input getUser{
   Email: String!
 }
 type Query {
-  getuser(input:getUser!): User!,
+  getuser(input:getUser!): User! @goField(forceResolver: true)
   alluser:[User!]!
+  protected: String! @goField(forceResolver: true) @auth
 }
 type Mutation {
-  createUser(input: NewUser!): User!
+  auth: Auth! 
+}
+type Auth{
+   login(Email: String!, Password: String!):Any! @goField(forceResolver: true)
+  register(input: NewUser!): Any! @goField(forceResolver: true)
 }

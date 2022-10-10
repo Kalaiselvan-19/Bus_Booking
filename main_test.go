@@ -1,7 +1,6 @@
 package main
 
 import (
-	"Bus_Booking/graph/model"
 	"Bus_Booking/models"
 	"bytes"
 	"encoding/json"
@@ -51,11 +50,11 @@ func TestGetUserHandler(t *testing.T) {
 func TestUpdateuserHandler(t *testing.T) {
 	r := SetUpRouter()
 	r.PUT("/update-user/:email")
-	user := model.User{
-		Name:        "Updated demo name",
-		Email:       "demo@gmail.com",
-		Password:    "Updateddemo ",
-		PhoneNumber: 0,
+	user := models.User{
+		Name:         "Updated demo name",
+		Email:        "demo@gmail.com",
+		Password:     "Updateddemo ",
+		Phone_Number: 0,
 	}
 	jsonValue, _ := json.Marshal(user)
 	reqFound, _ := http.NewRequest("PUT", "/update-user/"+user.Email, bytes.NewBuffer(jsonValue))
