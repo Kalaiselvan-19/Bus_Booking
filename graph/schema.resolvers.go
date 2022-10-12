@@ -25,26 +25,36 @@ func (r *mutationResolver) Auth(ctx context.Context) (*model.Auth, error) {
 	return &model.Auth{}, nil
 }
 
+// Createbus is the resolver for the Createbus field.
+func (r *mutationResolver) Createbus(ctx context.Context, input model.NewBus) (interface{}, error) {
+	return service.BusCreate(ctx, input)
+}
+
 // Getuser is the resolver for the getuser field.
-func (r *queryResolver) Getuser(ctx context.Context, input model.GetUser) (*model.User, error) {
-	return service.UserGetByEmail(ctx, input.Email)
+func (r *queryResolver) Getuser(ctx context.Context, email string) (interface{}, error) {
+	return service.UserGetByEmail(ctx, email)
 }
 
 // Alluser is the resolver for the alluser field.
-func (r *queryResolver) Alluser(ctx context.Context) ([]*model.User, error) {
-	var user []*model.User
+func (r *queryResolver) Alluser(ctx context.Context) (interface{}, error) {
+	var user model.User
 
-	err := r.DB.Model(&user).Select()
+	err := r.DB.Model(&user).First()
 	if err != nil {
 		return nil, err
 	}
 
-	return user, nil
+	return []*model.User{}, nil
 }
 
 // Protected is the resolver for the protected field.
 func (r *queryResolver) Protected(ctx context.Context) (string, error) {
 	return "Success", nil
+}
+
+// Getbus is the resolver for the getbus field.
+func (r *queryResolver) Getbus(ctx context.Context, busnum string) (interface{}, error) {
+	return service.BusGetByNum(ctx, busnum)
 }
 
 // Auth returns generated.AuthResolver implementation.

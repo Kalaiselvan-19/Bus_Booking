@@ -7,7 +7,7 @@ directive @auth on FIELD_DEFINITION
 scalar Any
 type User {
   Name:  String!
-	Email: String!
+	Email: String! 
 	Password:String!
 	Phone_Number: Int !
 }
@@ -19,17 +19,29 @@ input NewUser {
 	Phone_Number: Int !
 
 }
-
-input getUser{
-  Email: String!
+type Buses{
+  Bus_Name: String!
+  Bus_Number: String!
+  Total_seat: Int!
 }
+input NewBus {
+   Bus_Name: String!
+  Bus_Number: String!
+  Total_seat: Int!
+  
+
+}
+
 type Query {
-  getuser(input:getUser!): User! @goField(forceResolver: true)
-  alluser:[User!]!
+  getuser(Email:String!): Any! @goField(forceResolver: true)
+  alluser:Any!
   protected: String! @goField(forceResolver: true) @auth
+  getbus(Busnum:String!): Any! @goField(forceResolver: true)
 }
 type Mutation {
   auth: Auth! 
+  Createbus(input: NewBus!): Any! @goField(forceResolver: true)
+
 }
 type Auth{
    login(Email: String!, Password: String!):Any! @goField(forceResolver: true)

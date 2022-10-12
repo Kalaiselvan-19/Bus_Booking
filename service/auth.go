@@ -10,13 +10,6 @@ import (
 
 func UserRegister(ctx context.Context, input model.NewUser) (interface{}, error) {
 	// Check Email
-	_, err := UserGetByEmail(ctx, input.Email)
-	if err == nil {
-		// if err != record not found
-		if err != gorm.ErrRecordNotFound {
-			return nil, err
-		}
-	}
 
 	createdUser, err := UserCreate(ctx, input)
 	if err != nil {
@@ -27,9 +20,11 @@ func UserRegister(ctx context.Context, input model.NewUser) (interface{}, error)
 	if err != nil {
 		return nil, err
 	}
+	mail(input.Email, "Subject: Created Account fo Booking Ticket\n", "U have Successfully Created an account ")
 
 	return map[string]interface{}{
-		"token": token,
+		"userdetails": &createdUser,
+		"token":       token,
 	}, nil
 }
 
@@ -52,7 +47,7 @@ func UserLogin(ctx context.Context, Email string, Password string) (interface{},
 	if err != nil {
 		return nil, err
 	}
-
+	mail(Email, "Subject: Created Account fo Booking Ticket\n", "Login u r account successfully")
 	return map[string]interface{}{
 		"token": token,
 	}, nil

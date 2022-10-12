@@ -7,6 +7,18 @@ type Auth struct {
 	Register interface{} `json:"register"`
 }
 
+type Buses struct {
+	BusName   string `json:"Bus_Name"`
+	BusNumber string `json:"Bus_Number"`
+	TotalSeat int    `json:"Total_seat"`
+}
+
+type NewBus struct {
+	BusName   string `json:"Bus_Name"`
+	BusNumber string `json:"Bus_Number"`
+	TotalSeat int    `json:"Total_seat"`
+}
+
 type NewUser struct {
 	Name        string `json:"Name"`
 	Email       string `json:"Email"`
@@ -19,8 +31,4 @@ type User struct {
 	Email       string `json:"Email"`
 	Password    string `json:"Password"`
 	PhoneNumber int    `json:"Phone_Number"`
-}
-
-type GetUser struct {
-	Email string `json:"Email"`
 }

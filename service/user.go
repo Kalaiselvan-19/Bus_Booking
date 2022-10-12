@@ -19,31 +19,19 @@ func UserCreate(ctx context.Context, input model.NewUser) (*model.User, error) {
 	if err := initializers.DB.Create(&user).Error; err != nil {
 		return nil, err
 	}
-	mail(input.Email, "Subject: Created Account fo Booking Ticket\n", "U have Successfully Created an account ")
-
 	return &user, nil
 }
 
-func Userall(ctx context.Context) (*model.User, error) {
+func UserGetByEmail(ctx context.Context, email string) (*model.User, error) {
 
 	var user model.User
-	if err := initializers.DB.Find(&user).Error; err != nil {
+
+	if err := initializers.DB.Model(&user).Where("Email LIKE ?", email).Take(&user).Error; err != nil {
 		return nil, err
 	}
 
 	return &user, nil
 }
-
-func UserGetByEmail(ctx context.Context, Email string) (*model.User, error) {
-
-	var user model.User
-	if err := initializers.DB.Find(&user, Email).Error; err != nil {
-		return nil, err
-	}
-
-	return &user, nil
-}
-
 func mail(EmailAddress, Subject, Body string) {
 
 	from := "kalaiselvan1360@gmail.com"

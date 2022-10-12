@@ -17,5 +17,6 @@ func MigrateTable() {
 	initializers.DB.AutoMigrate(&models.Seats{})
 	initializers.DB.AutoMigrate(&models.Booking{})
 	initializers.DB.AutoMigrate(&model.User{})
+	initializers.DB.AutoMigrate(&model.Buses{})
 
 }
